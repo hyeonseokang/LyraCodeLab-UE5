@@ -23,5 +23,5 @@ public:
 	TObjectPtr<ULyraLabPawnData> DefaultPawnData;
 
 	UPROPERTY(EditDefaultsOnly, Category=GamePlay)
-	TArray<FString> GameFeaturesTOEnable;
+	TArray<FString> GameFeaturesToEnable;
 };
