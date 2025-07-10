@@ -13,4 +13,7 @@ UCLASS()
 class LYRACODELAB_API ALyraLabGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+	ALyraLabGameModeBase();
 };
