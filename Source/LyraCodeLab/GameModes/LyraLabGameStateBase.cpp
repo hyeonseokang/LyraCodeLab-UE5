@@ -2,4 +2,9 @@
 
 
 #include "GameModes/LyraLabGameStateBase.h"
+#include "LyraExperienceManagerComponent.h"
 
+ALyraLabGameStateBase::ALyraLabGameStateBase()
+{
+	ExperienceManagerComponent = CreateDefaultSubobject<ULyraExperienceManagerComponent>(TEXT("ExperienceManagerComponent"));
+}
