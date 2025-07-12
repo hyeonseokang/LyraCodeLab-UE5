@@ -16,4 +16,7 @@ class LYRACODELAB_API ULyraLabPawnData : public UPrimaryDataAsset
 
 public:
 	ULyraLabPawnData(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Pawn")
+	TSubclassOf<APawn> PawnClass;
 };
