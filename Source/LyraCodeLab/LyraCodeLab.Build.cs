@@ -12,7 +12,8 @@ public class LyraCodeLab : ModuleRules
         {
             "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
             "GamePlayTags",
-			"ModularGamePlay"
+			"ModularGamePlay",
+			"GameFeatures",
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
