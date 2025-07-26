@@ -16,4 +16,7 @@ class ALPHALAB_API UKhsPawnData : public UPrimaryDataAsset
 
 public:
 	UKhsPawnData(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Khs|Pawn")
+	TSubclassOf<APawn> PawnClass;
 };

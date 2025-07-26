@@ -2,4 +2,10 @@
 
 
 #include "KhsGameState.h"
+#include "KhsExperienceManagerComponent.h"
 
+AKhsGameState::AKhsGameState()
+{
+	ExperienceManagerComponent = CreateDefaultSubobject<UKhsExperienceManagerComponent>(
+		TEXT("ExperienceManagerComponent"));
+}
