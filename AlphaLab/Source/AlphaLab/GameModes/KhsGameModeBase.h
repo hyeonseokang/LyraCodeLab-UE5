@@ -13,5 +13,11 @@ UCLASS()
 class ALPHALAB_API AKhsGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AKhsGameModeBase();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+
+	void HandleMatchAssignmentIfNotExpectingOne();
 };
