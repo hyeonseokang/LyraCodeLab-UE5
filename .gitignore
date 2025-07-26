@@ -73,3 +73,6 @@
 
 # DerivedDataCache
 */DerivedDataCache/
+
+**/Plugins/**/Binaries/
+**/Plugins/**/Intermediate/
