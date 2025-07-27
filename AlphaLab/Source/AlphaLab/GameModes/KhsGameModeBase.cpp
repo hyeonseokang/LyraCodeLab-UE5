@@ -77,9 +77,12 @@ APawn* AKhsGameModeBase::SpawnDefaultPawnAtTransform_Implementation(AController*
 					PawnExtComp->SetPawnData(PawnData);
 				}
 			}
+
+			SpawnedPawn->FinishSpawning(SpawnTransform);
+			return SpawnedPawn;
 		}
 	}
-	return Super::SpawnDefaultPawnAtTransform_Implementation(NewPlayer, SpawnTransform);
+	return nullptr;
 }
 
 void AKhsGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
