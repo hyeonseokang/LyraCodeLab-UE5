@@ -10,6 +10,7 @@
 #include "AlphaLab/Player/KhsPlayerController.h"
 #include "AlphaLab/Player/KhsPlayerState.h"
 #include "AlphaLab/Character/KhsPawnData.h"
+#include "AlphaLab/Character/KhsPawnExtensionComponent.h"
 
 AKhsGameModeBase::AKhsGameModeBase()
 {
@@ -49,8 +50,6 @@ UClass* AKhsGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
 	return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
-PRAGMA_DISABLE_OPTIMIZATION
-
 void AKhsGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
 	if (IsExperienceLoaded())
@@ -58,11 +57,28 @@ void AKhsGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController*
 		Super::HandleStartingNewPlayer_Implementation(NewPlayer);
 	}
 }
-PRAGMA_ENABLE_OPTIMIZATION
 
 APawn* AKhsGameModeBase::SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer,
 	const FTransform& SpawnTransform)
 {
+	FActorSpawnParameters SpawnInfo;
+	SpawnInfo.Instigator = GetInstigator();
+	SpawnInfo.ObjectFlags |= RF_Transient;
+	SpawnInfo.bDeferConstruction = true;
+
+	if (UClass* PawnClass = GetDefaultPawnClassForController(NewPlayer))
+	{
+		if (APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(PawnClass, SpawnTransform, SpawnInfo))
+		{
+			if (UKhsPawnExtensionComponent* PawnExtComp = UKhsPawnExtensionComponent::FindPawnExtensionComponent(SpawnedPawn))
+			{
+				if (const UKhsPawnData* PawnData = GetPawnDataForController(NewPlayer))
+				{
+					PawnExtComp->SetPawnData(PawnData);
+				}
+			}
+		}
+	}
 	return Super::SpawnDefaultPawnAtTransform_Implementation(NewPlayer, SpawnTransform);
 }
 
