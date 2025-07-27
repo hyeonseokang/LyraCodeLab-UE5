@@ -3,12 +3,15 @@
 
 #include "KhsCharacter.h"
 
+#include "KhsPawnExtensionComponent.h"
+
 // Sets default values
 AKhsCharacter::AKhsCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = false;
+ 	PrimaryActorTick.bCanEverTick = false;
 
+	PawnExtensionComponent = CreateDefaultSubobject<UKhsPawnExtensionComponent>(TEXT("PawnExtensionComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -30,5 +33,6 @@ void AKhsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PawnExtensionComponent->SetupPlayerInputComponent();
 }
 

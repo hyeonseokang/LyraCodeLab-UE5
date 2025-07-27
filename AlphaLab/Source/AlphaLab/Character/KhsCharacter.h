@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "KhsCharacter.generated.h"
 
+class UKhsPawnExtensionComponent;
+
 UCLASS()
 class ALPHALAB_API AKhsCharacter : public ACharacter
 {
@@ -26,4 +28,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Khs|Character")
+	TObjectPtr<UKhsPawnExtensionComponent> PawnExtensionComponent;
 };
