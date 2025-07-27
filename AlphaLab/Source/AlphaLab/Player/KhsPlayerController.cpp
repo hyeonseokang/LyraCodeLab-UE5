@@ -3,3 +3,9 @@
 
 #include "KhsPlayerController.h"
 
+#include "AlphaLab/Camera/KhsPlayerCameraManager.h"
+
+AKhsPlayerController::AKhsPlayerController(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+{
+	PlayerCameraManagerClass = AKhsPlayerCameraManager::StaticClass();
+}

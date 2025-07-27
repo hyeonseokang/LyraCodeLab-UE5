@@ -13,5 +13,6 @@ UCLASS()
 class ALPHALAB_API AKhsPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	AKhsPlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 };
