@@ -3,6 +3,8 @@
 
 #include "KhsAssetManager.h"
 
+#include "AlphaLab/KhsGameplayTags.h"
+
 UKhsAssetManager::UKhsAssetManager()
 {
 }
@@ -17,6 +19,14 @@ UKhsAssetManager& UKhsAssetManager::Get()
 	}
 
 	return *NewObject<UKhsAssetManager>();
+}
+
+// 에디터가 켜지기도 전
+void UKhsAssetManager::StartInitialLoading()
+{
+	Super::StartInitialLoading();
+
+	FKhsGameplayTags::InitializeNativeTags();
 }
 
 bool UKhsAssetManager::ShouldLogAssetLoads()

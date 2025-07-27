@@ -19,6 +19,8 @@ public:
 
 	static UKhsAssetManager& Get();
 
+	virtual void StartInitialLoading() override;
+	
 	static bool ShouldLogAssetLoads();
 
 	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
@@ -29,6 +31,7 @@ public:
 	template <typename AssetType>
 	static TSubclassOf<AssetType> GetSubClass(const TSoftClassPtr<AssetType>& AssetPointer, bool bKeepInMemory = true);
 
+	
 	void AddLoadedAsset(const UObject* Asset);
 	
 	UPROPERTY()
