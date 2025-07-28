@@ -4,6 +4,7 @@
 #include "KhsCharacter.h"
 
 #include "KhsPawnExtensionComponent.h"
+#include "AlphaLab/Camera/KhsCameraComponent.h"
 
 // Sets default values
 AKhsCharacter::AKhsCharacter()
@@ -12,6 +13,9 @@ AKhsCharacter::AKhsCharacter()
  	PrimaryActorTick.bCanEverTick = false;
 
 	PawnExtensionComponent = CreateDefaultSubobject<UKhsPawnExtensionComponent>(TEXT("PawnExtensionComponent"));
+	
+	CameraComponent = CreateDefaultSubobject<UKhsCameraComponent>(TEXT("CameraComponent"));
+	CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
 }
 
 // Called when the game starts or when spawned

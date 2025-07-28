@@ -39,7 +39,6 @@ void UKhsExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId 
 
 	StartExperienceLoad();
 }
-PRAGMA_DISABLE_OPTIMIZATION
 void UKhsExperienceManagerComponent::StartExperienceLoad()
 {
 	check(CurrentExperience);
@@ -91,7 +90,6 @@ void UKhsExperienceManagerComponent::StartExperienceLoad()
 
 	static int32 StartExperienceLoad_FrameNumber = GFrameNumber;
 }
-PRAGMA_ENABLE_OPTIMIZATION
 
 void UKhsExperienceManagerComponent::OnExperienceLoadComplete()
 {

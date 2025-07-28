@@ -7,6 +7,7 @@
 #include "Components/PawnComponent.h"
 #include "KhsHeroComponent.generated.h"
 
+class UKhsCameraMode;
 /**
  * 
  */
@@ -16,7 +17,7 @@ class ALPHALAB_API UKhsHeroComponent : public UPawnComponent, public IGameFramew
 	GENERATED_BODY()
 
 public:
-	UKhsHeroComponent(const FObjectInitializer& ObjectInitializer);
+	UKhsHeroComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	static const FName NAME_ActorFeatureName;
 
@@ -29,4 +30,6 @@ public:
 	virtual bool CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) const override;
 	virtual void HandleChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) override;
 	virtual void CheckDefaultInitialization() override;
+
+	TSubclassOf<UKhsCameraMode> DetermineCameraMode() const;
 };

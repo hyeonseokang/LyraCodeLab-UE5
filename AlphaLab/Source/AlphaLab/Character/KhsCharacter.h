@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "KhsCharacter.generated.h"
 
+class UKhsCameraComponent;
 class UKhsPawnExtensionComponent;
 
 UCLASS()
@@ -30,4 +31,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Khs|Character")
 	TObjectPtr<UKhsPawnExtensionComponent> PawnExtensionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Khs|Character")
+	TObjectPtr<UKhsCameraComponent> CameraComponent;
 };

@@ -34,7 +34,7 @@ public:
 	virtual FName GetFeatureName() const override final { return NAME_ActorfeatureName; }
 	virtual void OnActorInitStateChanged(const FActorInitStateChangedParams& Params) override;
 	virtual bool CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) const override;
-	virtual void CheckDefaultInitialization() override;
+	virtual void CheckDefaultInitialization() override final;
 
 	UPROPERTY(EditInstanceOnly, Category = "Khs|Pawn")
 	TObjectPtr<const UKhsPawnData> PawnData;

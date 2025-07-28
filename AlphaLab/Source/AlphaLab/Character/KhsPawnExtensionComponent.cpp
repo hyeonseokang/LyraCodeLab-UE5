@@ -2,9 +2,8 @@
 
 
 #include "KhsPawnExtensionComponent.h"
-
-#include "AlphaLab/KhsGameplayTags.h"
 #include "Components/GameFrameworkComponentManager.h"
+#include "AlphaLab/KhsGameplayTags.h"
 
 const FName UKhsPawnExtensionComponent::NAME_ActorfeatureName("PawnExtension");
 
@@ -14,6 +13,7 @@ UKhsPawnExtensionComponent::UKhsPawnExtensionComponent(const FObjectInitializer&
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+PRAGMA_DISABLE_OPTIMIZATION
 void UKhsPawnExtensionComponent::SetPawnData(const UKhsPawnData* InPawnData)
 {
 	APawn* Pawn = GetPawnChecked<APawn>();
@@ -45,8 +45,12 @@ void UKhsPawnExtensionComponent::OnRegister()
 	}
 
 	RegisterInitStateFeature();
-}
 
+
+	// 디버깅 용
+	UGameFrameworkComponentManager* Manager = UGameFrameworkComponentManager::GetForActor(GetOwningActor());
+}
+PRAGMA_ENABLE_OPTIMIZATION
 void UKhsPawnExtensionComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -67,9 +71,9 @@ void UKhsPawnExtensionComponent::EndPlay(const EEndPlayReason::Type EndPlayReaso
 
 void UKhsPawnExtensionComponent::OnActorInitStateChanged(const FActorInitStateChangedParams& Params)
 {
-	const FKhsGameplayTags& InitTags = FKhsGameplayTags::Get();
 	if (Params.FeatureName != NAME_ActorfeatureName)
 	{
+		const FKhsGameplayTags& InitTags = FKhsGameplayTags::Get();
 		if (Params.FeatureState == InitTags.InitState_DataAvailable)
 		{
 			CheckDefaultInitialization();
@@ -100,8 +104,8 @@ bool UKhsPawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManag
 			return false;
 		}
 
-		const bool bIsLocallyCOntrolled = Pawn->IsLocallyControlled();
-		if (bIsLocallyCOntrolled)
+		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
+		if (bIsLocallyControlled)
 		{
 			if (!GetController<AController>())
 			{

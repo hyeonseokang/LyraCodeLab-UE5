@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "KhsPawnData.generated.h"
 
+class UKhsCameraMode;
 /**
  * 
  */
@@ -19,4 +20,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Khs|Pawn")
 	TSubclassOf<APawn> PawnClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Khs|Camera")
+	TSubclassOf<UKhsCameraMode> DefaultCameraMode;
 };

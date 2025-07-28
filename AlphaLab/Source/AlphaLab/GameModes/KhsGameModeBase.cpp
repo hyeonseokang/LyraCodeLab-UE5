@@ -85,6 +85,7 @@ APawn* AKhsGameModeBase::SpawnDefaultPawnAtTransform_Implementation(AController*
 	return nullptr;
 }
 
+PRAGMA_DISABLE_OPTIMIZATION
 void AKhsGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 {
 	FPrimaryAssetId ExperienceId;
@@ -98,6 +99,7 @@ void AKhsGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 
 	OnMatchAssignmentGiven(ExperienceId);
 }
+PRAGMA_ENABLE_OPTIMIZATION
 
 void AKhsGameModeBase::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId)
 {
@@ -121,7 +123,7 @@ void AKhsGameModeBase::OnExperienceLoaded(const UKhsExperienceDefinition* Curren
 {
 	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
 	{
-		APlayerController* PC = Cast<APlayerController>(Iterator->Get());
+		APlayerController* PC = Cast<APlayerController>(*Iterator);
 
 		if (PC && PC->GetPawn() == nullptr)
 		{
