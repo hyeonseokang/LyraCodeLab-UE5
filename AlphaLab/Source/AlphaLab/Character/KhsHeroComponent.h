@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
+#include "AlphaLab/Input/KhsMappableConfigPair.h"
 #include "Components/GameFrameworkInitStateInterface.h"
 #include "Components/PawnComponent.h"
 #include "KhsHeroComponent.generated.h"
@@ -32,4 +34,10 @@ public:
 	virtual void CheckDefaultInitialization() override;
 
 	TSubclassOf<UKhsCameraMode> DetermineCameraMode() const;
+	void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+	void Input_Move(const FInputActionValue& InputActionValue);
+	void Input_LookMouse(const FInputActionValue& InputActionValue);
+
+	UPROPERTY(EditAnywhere)
+	TArray<FKhsMappableConfigPair> DefaultInputConfig;
 };

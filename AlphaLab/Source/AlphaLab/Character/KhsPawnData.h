@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "KhsPawnData.generated.h"
 
+class UKhsInputConfig;
 class UKhsCameraMode;
 /**
  * 
@@ -23,4 +24,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Khs|Camera")
 	TSubclassOf<UKhsCameraMode> DefaultCameraMode;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Khs|InputConfig")
+	TObjectPtr<UKhsInputConfig> InputConfig;
 };
