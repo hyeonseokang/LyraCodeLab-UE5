@@ -6,12 +6,18 @@
 #include "Components/GameStateComponent.h"
 #include "KhsExperienceManagerComponent.generated.h"
 
+namespace UE::GameFeatures
+{
+	struct FResult;
+}
+
 class UKhsExperienceDefinition;
 
 enum class EKhsExperienceLoadState
 {
 	Unloaded,
-	Loading,
+	Loading, // Experience 관련 로딩
+	LoadingGameFeatures, // Game Feature Loding
 	Loaded,
 	Deactivating,
 };
@@ -36,6 +42,7 @@ public:
 	void ServerSetCurrentExperience(FPrimaryAssetId ExperienceId);
 	void StartExperienceLoad();
 	void OnExperienceLoadComplete();
+	void OnGameFeaturePluginLoadComplete(const UE::GameFeatures::FResult& Result);
 	void OnExperienceFullLoadCompleted();
 
 	const UKhsExperienceDefinition* GetCurrentExperienceChecked() const;
@@ -46,4 +53,8 @@ public:
 	EKhsExperienceLoadState LoadState = EKhsExperienceLoadState::Unloaded;
 
 	FOnKhsExperienceLoaded OnExperienceLoaded;
+	
+	// Game Feature
+	int32 NumGameFeaturePluginLoading = 0;
+	TArray<FString> GameFeaturePluginURLs;
 };

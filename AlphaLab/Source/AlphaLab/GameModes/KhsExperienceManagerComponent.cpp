@@ -3,6 +3,7 @@
 
 #include "KhsExperienceManagerComponent.h"
 
+#include "GameFeaturesSubsystem.h"
 #include "KhsExperienceDefinition.h"
 #include "AlphaLab/System/KhsAssetManager.h"
 #include "GameFeaturesSubsystemSettings.h"
@@ -95,7 +96,49 @@ void UKhsExperienceManagerComponent::OnExperienceLoadComplete()
 {
 	static int32 OnExperienceLoadComplete_FrameNumber = GFrameNumber;
 
-	OnExperienceFullLoadCompleted();
+	check(LoadState == EKhsExperienceLoadState::Loading);
+	check(CurrentExperience);
+
+	GameFeaturePluginURLs.Reset();
+
+	auto CollectGameFeaturePluginURLs = [This = this](const UPrimaryDataAsset* Cntext, const TArray<FString>& FeaturePluginList)
+	{
+		for (const FString& PluginName : FeaturePluginList)
+		{
+			FString PluginURL;
+			if (UGameFeaturesSubsystem::Get().GetPluginURLByName(PluginName, PluginURL))
+			{
+				This->GameFeaturePluginURLs.AddUnique(PluginURL);
+			}
+		}
+	};
+
+	CollectGameFeaturePluginURLs(CurrentExperience, CurrentExperience->GameFeaturesToEnable);
+
+	NumGameFeaturePluginLoading = GameFeaturePluginURLs.Num();
+	if (NumGameFeaturePluginLoading)
+	{
+		LoadState = EKhsExperienceLoadState::LoadingGameFeatures;
+		for (const FString& PluginURL:GameFeaturePluginURLs)
+		{
+			UGameFeaturesSubsystem::Get().LoadAndActivateGameFeaturePlugin(
+				PluginURL, FGameFeaturePluginLoadComplete::CreateUObject(
+					this, &ThisClass::OnGameFeaturePluginLoadComplete));
+		}
+	}
+	else
+	{
+		OnExperienceFullLoadCompleted();
+	}
+}
+
+void UKhsExperienceManagerComponent::OnGameFeaturePluginLoadComplete(const UE::GameFeatures::FResult& Result)
+{
+	NumGameFeaturePluginLoading--;
+	if (NumGameFeaturePluginLoading == 0)
+	{
+		OnExperienceFullLoadCompleted();
+	}
 }
 
 void UKhsExperienceManagerComponent::OnExperienceFullLoadCompleted()
