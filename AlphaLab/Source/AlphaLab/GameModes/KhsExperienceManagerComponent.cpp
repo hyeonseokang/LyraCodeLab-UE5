@@ -3,10 +3,12 @@
 
 #include "KhsExperienceManagerComponent.h"
 
+#include "GameFeatureAction.h"
 #include "GameFeaturesSubsystem.h"
 #include "KhsExperienceDefinition.h"
 #include "AlphaLab/System/KhsAssetManager.h"
 #include "GameFeaturesSubsystemSettings.h"
+#include "KhsExperienceActionSet.h"
 
 void UKhsExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(FOnKhsExperienceLoaded::FDelegate&& Delegate)
 {
@@ -96,6 +98,7 @@ void UKhsExperienceManagerComponent::OnExperienceLoadComplete()
 {
 	static int32 OnExperienceLoadComplete_FrameNumber = GFrameNumber;
 
+	
 	check(LoadState == EKhsExperienceLoadState::Loading);
 	check(CurrentExperience);
 
@@ -145,6 +148,39 @@ void UKhsExperienceManagerComponent::OnExperienceFullLoadCompleted()
 {
 	check(LoadState != EKhsExperienceLoadState::Loaded);
 
+	/* Experience Action Set */
+	{
+		LoadState = EKhsExperienceLoadState::ExecutingActions;
+
+		FGameFeatureActivatingContext Context;
+		{
+			const FWorldContext* ExistingWordlContext = GEngine->GetWorldContextFromWorld(GetWorld());
+			if (ExistingWordlContext)
+			{
+				Context.SetRequiredWorldContextHandle(ExistingWordlContext->ContextHandle);
+			}
+		}
+
+		auto ActivateListOfActions = [&Context](const TArray<UGameFeatureAction*>& ActionList)
+		{
+			for (UGameFeatureAction* Action : ActionList)
+			{
+				if (Action)
+				{
+					Action->OnGameFeatureRegistering();
+					Action->OnGameFeatureLoading();
+					Action->OnGameFeatureActivating();
+				}
+			}
+		};
+
+		ActivateListOfActions(CurrentExperience->Actions);
+		for (const TObjectPtr<UKhsExperienceActionSet>& ActionSet: CurrentExperience->ActionSets)
+		{
+			ActivateListOfActions(ActionSet->Actions);
+		}
+	}
+	
 	LoadState = EKhsExperienceLoadState::Loaded;
 	OnExperienceLoaded.Broadcast(CurrentExperience);
 	OnExperienceLoaded.Clear();

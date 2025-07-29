@@ -3,13 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFeaturePluginOperationResult.h"
 #include "Components/GameStateComponent.h"
 #include "KhsExperienceManagerComponent.generated.h"
-
-namespace UE::GameFeatures
-{
-	struct FResult;
-}
 
 class UKhsExperienceDefinition;
 
@@ -17,7 +13,8 @@ enum class EKhsExperienceLoadState
 {
 	Unloaded,
 	Loading, // Experience 관련 로딩
-	LoadingGameFeatures, // Game Feature Loding
+	LoadingGameFeatures, // Game Feature Loading
+	ExecutingActions,
 	Loaded,
 	Deactivating,
 };

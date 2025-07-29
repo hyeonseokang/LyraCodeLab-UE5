@@ -6,6 +6,8 @@
 #include "Engine/DataAsset.h"
 #include "KhsExperienceDefinition.generated.h"
 
+class UKhsExperienceActionSet;
+class UGameFeatureAction;
 class UKhsPawnData;
 /**
  * 
@@ -23,4 +25,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
 	TArray<FString> GameFeaturesToEnable;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	TArray<TObjectPtr<UKhsExperienceActionSet>> ActionSets;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	TArray<TObjectPtr<UGameFeatureAction>> Actions;
 };

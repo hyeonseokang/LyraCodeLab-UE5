@@ -5,6 +5,7 @@
 
 #include "KhsPawnExtensionComponent.h"
 #include "AlphaLab/Camera/KhsCameraComponent.h"
+#include "Components/GameFrameworkComponentManager.h"
 
 // Sets default values
 AKhsCharacter::AKhsCharacter()
@@ -23,6 +24,12 @@ void AKhsCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AKhsCharacter::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+	UGameFrameworkComponentManager::AddGameFrameworkComponentReceiver(this);		
 }
 
 // Called every frame
