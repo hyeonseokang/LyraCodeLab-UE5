@@ -19,6 +19,8 @@ public class AlphaLab : ModuleRules
 			"GameplayTags",
 			"ModularGameplay",
 			"GameFeatures",
+			
+			"CommonUser",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

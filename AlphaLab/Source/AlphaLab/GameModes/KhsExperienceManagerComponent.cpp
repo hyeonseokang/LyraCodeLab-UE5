@@ -23,6 +23,7 @@ void UKhsExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(FOnKhsExp
 	}
 }
 
+PRAGMA_DISABLE_OPTIMIZATION
 void UKhsExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId ExperienceId)
 {
 	UKhsAssetManager& AssetManager = UKhsAssetManager::Get();
@@ -42,6 +43,8 @@ void UKhsExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId 
 
 	StartExperienceLoad();
 }
+PRAGMA_ENABLE_OPTIMIZATION
+
 void UKhsExperienceManagerComponent::StartExperienceLoad()
 {
 	check(CurrentExperience);

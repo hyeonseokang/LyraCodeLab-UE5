@@ -11,6 +11,7 @@
 #include "AlphaLab/Player/KhsPlayerState.h"
 #include "AlphaLab/Character/KhsPawnData.h"
 #include "AlphaLab/Character/KhsPawnExtensionComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AKhsGameModeBase::AKhsGameModeBase()
 {
@@ -90,6 +91,12 @@ void AKhsGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 {
 	FPrimaryAssetId ExperienceId;
 	UWorld* World = GetWorld();
+
+	if (!ExperienceId.IsValid() && UGameplayStatics::HasOption(OptionsString, TEXT("Experience")))
+	{
+		const FString ExperienceFromOptions = UGameplayStatics::ParseOption(OptionsString, TEXT("Experience"));
+		ExperienceId = FPrimaryAssetId(FPrimaryAssetType(UKhsExperienceDefinition::StaticClass()->GetFName()), FName(*ExperienceFromOptions));
+	}
 
 	if (!ExperienceId.IsValid())
 	{

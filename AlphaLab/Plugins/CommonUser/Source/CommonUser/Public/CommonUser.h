@@ -2,14 +2,13 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FMainMneuRuntimeModule : public IModuleInterface
+class FCommonUserModule : public IModuleInterface
 {
 public:
-	//~IModuleInterface
+
+	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
-	//~End of IModuleInterface
 };
